@@ -7,7 +7,7 @@ const CreateAirplanePage: FC = () => {
       <div className="flex flex-row item-center justify-between">
         <div className="my-5 text-2xl font-extrabold">Create Airplanes</div>
       </div>
-      <FormAirplane />
+      <FormAirplane type="ADD" />
     </div>
   );
 };

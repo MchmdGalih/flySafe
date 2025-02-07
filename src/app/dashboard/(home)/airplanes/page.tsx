@@ -4,6 +4,11 @@ import { Plus } from "lucide-react";
 import Link from "next/link";
 import { columns } from "./components/column-table";
 import getAllPlanes from "./libs/data";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Dashboard | Airplanes",
+};
 
 export default async function Airplanes() {
   const planes = await getAllPlanes();

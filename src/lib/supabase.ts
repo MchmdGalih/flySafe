@@ -12,16 +12,42 @@ export const uploadFile = async (file: File) => {
   try {
     const fileName = `${Date.now()}.png`;
     const { error } = await supabase.storage
-      .from("avatars")
-      .upload(`public/airplanes.png/${fileName}`, file, {
+      .from("UploadImage")
+      .upload(`public/airplanes/${fileName}`, file, {
         cacheControl: "3600",
         upsert: false,
       });
     if (error) {
       throw new Error(error.message);
     }
+
+    return fileName;
   } catch (error) {
     console.log(error);
     return error;
+  }
+};
+
+export const getFileUrl = (fileName: string) => {
+  const { data } = supabase.storage
+    .from("UploadImage")
+    .getPublicUrl(`public/airplanes/${fileName}`);
+
+  return data.publicUrl;
+};
+
+export const deleteFile = async (fileName: string) => {
+  try {
+    const { data, error } = await supabase.storage
+    .from("UploadImage")
+    .remove([`public/airplanes/${fileName}`]);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
+  } catch (error) {
+    return error    
   }
 };

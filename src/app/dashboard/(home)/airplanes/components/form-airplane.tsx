@@ -1,29 +1,32 @@
 "use client";
 
 import React, { type FC } from "react";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ActionResult } from "@/app/dashboard/(auth)/signin/form/actions";
-import { useFormState, useFormStatus } from "react-dom";
-import { saveAirplane } from "../libs/actions";
+import { useFormState } from "react-dom";
+import { saveAirplane, editAirplanes } from "../libs/actions";
+import type { Airplane } from "@prisma/client";
+import SubmitButtonForm from "../../components/submit-button-form";
+
+interface FormAirplaneProps {
+  type?: "ADD" | "EDIT";
+  defaultValues?: Airplane | null;
+}
 
 const initialFormState: ActionResult = {
   errorTitle: null,
   errorDesc: [],
 };
 
-const SubmitButton = () => {
-  const { pending } = useFormStatus();
-  return (
-    <Button disabled={pending} className="w-full" type="submit">
-      {pending ? "Loading..." : "Submit"}
-    </Button>
-  );
-};
+const FormAirplane: FC<FormAirplaneProps> = ({ type, defaultValues }) => {
+  const updateAirplaneById = (_state: ActionResult, formData: FormData) =>
+    editAirplanes(null, defaultValues?.id!!, formData);
 
-const FormAirplane: FC = () => {
-  const [state, formAction] = useFormState(saveAirplane, initialFormState);
+  const [state, formAction] = useFormState(
+    type === "ADD" ? saveAirplane : updateAirplaneById,
+    initialFormState
+  );
   return (
     <form className="w-1/2" action={formAction}>
       {state.errorTitle !== null && (
@@ -39,24 +42,30 @@ const FormAirplane: FC = () => {
 
       <div className="space-y-2 ">
         <Label htmlFor="code">Code Airplane</Label>
-        <Input name="code" id="code" placeholder="ABC-123..." required />
-      </div>
-      <div className="space-y-2 ">
-        <Label htmlFor="name">Name Airplane</Label>
-        <Input name="name" id="name" placeholder="Garuda" required />
-      </div>
-      <div className="space-y-2 ">
-        <Label htmlFor="image">Upload Image </Label>
         <Input
-          type="file"
-          name="image"
-          id="image"
-          placeholder="url..."
+          name="code"
+          id="code"
+          placeholder="ABC-123..."
+          defaultValue={defaultValues?.code}
           required
         />
       </div>
+      <div className="space-y-2 ">
+        <Label htmlFor="name">Name Airplane</Label>
+        <Input
+          name="name"
+          id="name"
+          placeholder="Garuda"
+          defaultValue={defaultValues?.name}
+          required
+        />
+      </div>
+      <div className="space-y-2 ">
+        <Label htmlFor="image">Upload Image </Label>
+        <Input type="file" name="image" id="image" placeholder="url..." />
+      </div>
 
-      <SubmitButton />
+      <SubmitButtonForm />
     </form>
   );
 };

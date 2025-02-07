@@ -3,13 +3,13 @@ import { z } from "zod";
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
 const MAX_SIZE_IMAGE = 2000000;
 
-export const aiplaneFormSchema = z.object({
+export const airplaneFormSchema = z.object({
   name: z
     .string({ required_error: "Name is required" })
     .min(4, { message: "Name must be at least 4 characters" }),
   code: z
     .string({ required_error: "Code is required" })
-    .regex(/^[A-Z]{3}-[0-9]$/, "Code is invalid must [XXX-111]"),
+    .regex(/^[A-Z]{3}-[0-9]{3}$/, "Code is invalid must [XXX-111]"),
   image: z
     .any()
     .refine(
