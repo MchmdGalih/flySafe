@@ -1,6 +1,4 @@
 "use client";
-
-
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -12,14 +10,32 @@ import {
 } from "@/components/ui/select";
 import SubmitButtonForm from "../../components/submit-button-form";
 import type { Airplane } from "@prisma/client";
+import type { ActionResult } from "@/app/dashboard/(auth)/signin/form/actions";
+import { useFormState } from "react-dom";
+import { saveFlight } from "../libs/actions";
 
 interface FormAirplanesProps {
-    airplanes: Airplane[]
+  airplanes: Airplane[];
 }
-
-export default function FormFlight({airplanes}: FormAirplanesProps)  {
+const initialFormState: ActionResult = {
+  errorTitle: null,
+  errorDesc: [],
+};
+export default function FormFlight({ airplanes }: FormAirplanesProps) {
+  const [state, formAction] = useFormState(saveFlight, initialFormState);
   return (
-    <form>
+    <form action={formAction}>
+      {state?.errorTitle !== null && (
+        <div className=" my-7 bg-red-500  p-4 rounded-lg text-white">
+          <div className="font-bold mb-4">{state?.errorTitle}</div>
+          <ul className="list-disc list-inside">
+            {state?.errorDesc?.map((value, idx) => (
+              <li key={idx}>{value}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2 ">
           <Label htmlFor="airplaneId"> Select Airplane</Label>
@@ -29,7 +45,9 @@ export default function FormFlight({airplanes}: FormAirplanesProps)  {
             </SelectTrigger>
             <SelectContent>
               {airplanes.map((value) => (
-                <SelectItem key={value.id} value={value.id} >{value.name}</SelectItem>
+                <SelectItem key={value.id} value={value.id}>
+                  {value.name}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>
@@ -42,7 +60,6 @@ export default function FormFlight({airplanes}: FormAirplanesProps)  {
             type="number"
             placeholder="Ticket price..."
             min={0}
-            required
           />
           <span className="text-xs text-gray-800">
             The price for Business class increases by Rp. 500,000.00, and First
@@ -58,7 +75,6 @@ export default function FormFlight({airplanes}: FormAirplanesProps)  {
             name="depature_city"
             id="depature_city"
             placeholder="Depature City..."
-            required
           />
         </div>
         <div className="space-y-1 ">
@@ -69,7 +85,6 @@ export default function FormFlight({airplanes}: FormAirplanesProps)  {
             id="depature_date"
             placeholder="Depature Date..."
             className="block"
-            required
           />
         </div>
         <div className="space-y-1 ">
@@ -78,7 +93,6 @@ export default function FormFlight({airplanes}: FormAirplanesProps)  {
             name="depature_city_code"
             id="depature_city_code"
             placeholder="Depature City Code..."
-            required
           />
         </div>
       </div>
@@ -90,7 +104,6 @@ export default function FormFlight({airplanes}: FormAirplanesProps)  {
             name="destination_city"
             id="destination_city"
             placeholder="Destination City..."
-            required
           />
         </div>
         <div className="space-y-1 ">
@@ -101,7 +114,6 @@ export default function FormFlight({airplanes}: FormAirplanesProps)  {
             id="arrival_date"
             placeholder="Arrival Date..."
             className="block"
-            required
           />
         </div>
         <div className="space-y-1 ">
@@ -110,7 +122,6 @@ export default function FormFlight({airplanes}: FormAirplanesProps)  {
             name="destination_city_code"
             id="destination_city_code"
             placeholder="Destination City Code..."
-            required
           />
         </div>
       </div>
