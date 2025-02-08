@@ -13,7 +13,7 @@ const CreateFlightPage: FC = async () => {
       <div className="flex flex-row item-center justify-between">
         <div className="my-5 text-2xl font-extrabold">Create Flights</div>
       </div>
-      <FormFlight airplanes={airplanes} />
+      <FormFlight type="ADD" airplanes={airplanes} />
     </div>
   );
 };

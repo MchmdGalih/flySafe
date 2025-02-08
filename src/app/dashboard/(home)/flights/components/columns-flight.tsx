@@ -8,6 +8,8 @@ import { Pencil } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import ColumnRouteFlight from "./columns-route-flight";
+import ColumnSeatPrice from "./columns-seat-price";
+import DeleteFlight from "./delete-flight";
 
 export type FlightColumn = Flight & {
   airplane: Airplane;
@@ -48,11 +50,11 @@ export const columns: ColumnDef<FlightColumn>[] = [
   },
   {
     accessorKey: "price",
-    header: "Price",
+    header: "Price / Seats",
     cell: ({ row }) => {
       const flight = row.original;
 
-      return "Price";
+      return <ColumnSeatPrice flight={flight} />;
     },
   },
   {
@@ -68,7 +70,7 @@ export const columns: ColumnDef<FlightColumn>[] = [
               Edit
             </Link>
           </Button>
-          {/* <DeleteAirplane id={plane.id} /> */}
+          {<DeleteFlight id={flight.id} />}
         </div>
       );
     },
