@@ -2,8 +2,8 @@
 import bcrypt from "bcrypt";
 import type { ActionResult } from "@/app/dashboard/(auth)/signin/form/actions";
 import { signupFormSchema } from "./validation";
-import prisma from "../../../../../../lib/prisma";
 import { redirect } from "next/navigation";
+import prisma from "../../../../../lib/prisma";
 
 export default async function signupUser(
   prevState: unknown,
