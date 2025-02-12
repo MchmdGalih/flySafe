@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import NavbarAuth from "./navbar-auth";
 
 const Navbar = () => {
   return (
@@ -12,7 +13,7 @@ const Navbar = () => {
         <Image
           width={120}
           height={60}
-          src="../assets/images/logos/logo.svg"
+          src="/assets/images/logos/logo.svg"
           alt="logo"
         />
       </Link>
@@ -42,12 +43,7 @@ const Navbar = () => {
             About
           </Link>
         </li>
-        <Link
-          href="signin.html"
-          className="font-bold text-flysha-black bg-flysha-light-purple rounded-full p-[12px_30px] transition-all duration-300 hover:shadow-[0_10px_20px_0_#B88DFF]"
-        >
-          Sign In
-        </Link>
+        <NavbarAuth />
       </ul>
     </nav>
   );

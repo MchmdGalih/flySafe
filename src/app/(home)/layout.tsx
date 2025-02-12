@@ -1,10 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "../globals.css";
-import Image from "next/image";
-import Link from "next/link";
-import Navbar from "../components/Navbar";
-import CompanyLogos from "../components/company-logos";
 import Footer from "../components/Footer";
 
 const geistSans = localFont({
@@ -32,7 +28,6 @@ export default function RootLayout({
       <body
         className={` ${geistSans.variable} ${geistMono.variable} text-white font-poppins bg-flysha-black`}
       >
-        
         {children}
         <Footer />
       </body>
