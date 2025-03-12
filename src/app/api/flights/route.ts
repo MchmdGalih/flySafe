@@ -1,6 +1,6 @@
 import type { TypeSeat } from "@prisma/client";
 import type { NextRequest } from "next/server";
-import prisma from "../../../lib/prisma";
+import prisma from "../../../../lib/prisma";
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;

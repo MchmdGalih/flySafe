@@ -8,8 +8,8 @@ interface FlightProviderProps {
   children: ReactNode;
 }
 
-type FlightWithPlane = Flight & {
-  plane: Airplane;
+export type FlightWithPlane = Flight & {
+  airplane: Airplane;
 };
 
 export type FContext = {
