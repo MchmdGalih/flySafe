@@ -8,7 +8,6 @@ interface FlightItemProps {
 }
 
 export default function ListItemFlights({ data }: FlightItemProps) {
-  console.log("ini dataa-->", { data });
   return (
     <div className="ticket-card flex justify-between items-center rounded-[20px] p-5 bg-flysha-bg-purple">
       <div className="flex gap-[16px] items-center">
